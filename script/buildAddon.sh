@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-commit=1097b2c33e54a37c0d2c0f2d498c7d1cf967eae9
+commit=fc5775e0622955f9e5d887dfaf0b7bbf7f9046f9
 
 rDIR=$(pwd)
 tmpDir=$(mktemp -d 2>/dev/null || mktemp -d -t 'tmpdir.XXXX')
@@ -53,6 +53,7 @@ elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
 fi
 
 cp $(pwd)/pg_query.h $rDIR/libpg_query/include/
+cp $(pwd)/protobuf/*.proto $rDIR/libpg_query/protobuf/
 
 cd "$rDIR"
 rm -rf "$tmpDir"
