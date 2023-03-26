@@ -14,7 +14,7 @@ class QueryWorker : public Napi::AsyncWorker {
   // here, so everything we need for input and output
   // should go on `this`.
   void Execute () {
-    result = pg_query_parse(query.c_str());
+    result = pg_query_parse_protobuf(query.c_str());
   }
 
   // Executed when the async work is complete
@@ -31,7 +31,7 @@ class QueryWorker : public Napi::AsyncWorker {
 
  private:
   std::string query;
-  PgQueryParseResult result;
+  PgQueryProtobufParseResult result;
 };
 
 class DeparseWorker : public Napi::AsyncWorker {

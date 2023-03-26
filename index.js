@@ -5,7 +5,7 @@ module.exports = {
   parseQuery(query) {
     return new Promise((resolve, reject) => {
       PgQuery.parseQueryAsync(query, (err, result) => {
-        err ? reject(err) : resolve(JSON.parse(result));
+        err ? reject(err) : resolve(pg_query.ParseResult.decode(result).toJSON());
       });
     });
   },
@@ -29,7 +29,7 @@ module.exports = {
   },
 
   parseQuerySync(query) {
-    return JSON.parse(PgQuery.parseQuerySync(query));
+    return pg_query.ParseResult.decode(PgQuery.parseQuerySync(query)).toJSON();
   },
 
   deparseSync(parseTree) {

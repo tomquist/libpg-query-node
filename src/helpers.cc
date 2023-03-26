@@ -14,16 +14,21 @@ Napi::Error CreateError(Napi::Env env, const PgQueryError& err)
     return error;
 }
 
-Napi::String QueryParseResult(Napi::Env env, const PgQueryParseResult& result)
+Napi::Buffer<char> QueryParseResult(Napi::Env env, const PgQueryProtobufParseResult& result)
 {
     if (result.error) {
         auto throwVal = CreateError(env, *result.error);
-        pg_query_free_parse_result(result);
+        pg_query_free_protobuf_parse_result(result);
         throw throwVal;
     }
 
-    auto returnVal = Napi::String::New(env, result.parse_tree);
-    pg_query_free_parse_result(result);
+    // TODO Use NewOrCopy instead to avoid copying the data
+    auto returnVal = Napi::Buffer<char>::Copy(
+      env,
+      result.parse_tree.data,
+      result.parse_tree.len
+    );
+    pg_query_free_protobuf_parse_result(result);
     return returnVal;
 }
 

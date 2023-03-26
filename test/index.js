@@ -24,8 +24,8 @@ describe("Queries", () => {
       expect(selectedDatas[1][0].ResTarget.val.A_Const.val).to.have.property(
         "Null"
       );
-      expect(selectedDatas[2][0].ResTarget.val.A_Const.val.String.str).to.eq(
-        ""
+      expect(selectedDatas[2][0].ResTarget.val.A_Const.val.String).to.deep.eq(
+          {}
       );
       expect(selectedDatas[3]).to.have.lengthOf(2);
     });

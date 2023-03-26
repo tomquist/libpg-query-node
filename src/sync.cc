@@ -3,9 +3,9 @@
 #include "sync.h"  // NOLINT(build/include)
 #include "helpers.h"  // NOLINT(build/include)
 
-Napi::String ParseQuerySync(const Napi::CallbackInfo& info) {
+Napi::Buffer<char> ParseQuerySync(const Napi::CallbackInfo& info) {
   std::string query = info[0].As<Napi::String>();
-  PgQueryParseResult result = pg_query_parse(query.c_str());
+  PgQueryProtobufParseResult result = pg_query_parse_protobuf(query.c_str());
 
   return QueryParseResult(info.Env(), result);
 }
